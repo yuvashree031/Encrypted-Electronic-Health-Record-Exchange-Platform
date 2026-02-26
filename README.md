@@ -1,6 +1,8 @@
-# Secure Healthcare Data Exchange System
+# Encrypted-Electronic-Health-Record-Exchange-Platform
 
-A minimal backend system demonstrating secure authentication, role-based access control, and AES encryption for medical records using Java and Spring Boot.
+Healthcare systems often lack secure and efficient platforms for sharing sensitive medical records between doctors and patients. Traditional data exchange methods are vulnerable to breaches, unauthorized access, and poor audit tracking, making compliance with healthcare privacy regulations challenging.
+
+This platform provides a secure Electronic Health Record (EHR) system built with Spring Boot and MySQL to enable encrypted medical data exchange. It implements AES-256 encryption, role-based access control, secure PDF uploads, real-time audit logging, and MVC architecture with a responsive frontend to ensure confidentiality, integrity, and efficient medical record management.
 
 ## Tech Stack
 
@@ -65,9 +67,9 @@ The application will start on `http://localhost:8080`
 Request:
 ```json
 {
-  "name": "Dr. John Smith",
-  "email": "john@hospital.com",
-  "password": "password123",
+  "name": "Dr. Yuvashree R",
+  "email": "yuvashreedr@gmail.com",
+  "password": "qwe123",
   "role": "DOCTOR"
 }
 ```
@@ -76,7 +78,7 @@ Response:
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiJ9...",
-  "email": "john@hospital.com",
+  "email": "yuvashreedr@gmail.com",
   "role": "DOCTOR"
 }
 ```
@@ -88,8 +90,8 @@ Response:
 Request:
 ```json
 {
-  "email": "john@hospital.com",
-  "password": "password123"
+  "email": "yuvashreedr@gmail.com",
+  "password": "qwe123"
 }
 ```
 
@@ -97,7 +99,7 @@ Response:
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiJ9...",
-  "email": "john@hospital.com",
+  "email": "yuvashreedr@gmail.com",
   "role": "DOCTOR"
 }
 ```
@@ -114,7 +116,7 @@ Authorization: Bearer <token>
 Request:
 ```json
 {
-  "patientId": 2,
+  "patientId": 1,
   "recordData": "Patient diagnosed with hypertension. Prescribed medication."
 }
 ```
@@ -124,7 +126,7 @@ Response:
 {
   "id": 1,
   "doctorId": 1,
-  "patientId": 2,
+  "patientId": 1,
   "recordData": "Patient diagnosed with hypertension. Prescribed medication.",
   "createdAt": "2026-02-26T10:30:00"
 }
@@ -145,52 +147,11 @@ Response:
   {
     "id": 1,
     "doctorId": 1,
-    "patientId": 2,
+    "patientId": 1,
     "recordData": "Patient diagnosed with hypertension. Prescribed medication.",
     "createdAt": "2026-02-26T10:30:00"
   }
 ]
-```
-
-## Testing Flow
-
-1. Register a DOCTOR:
-```bash
-curl -X POST http://localhost:8080/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Dr. Smith","email":"doctor@test.com","password":"pass123","role":"DOCTOR"}'
-```
-
-2. Register a PATIENT:
-```bash
-curl -X POST http://localhost:8080/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"John Doe","email":"patient@test.com","password":"pass123","role":"PATIENT"}'
-```
-
-3. Login as DOCTOR and save token:
-```bash
-curl -X POST http://localhost:8080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"doctor@test.com","password":"pass123"}'
-```
-
-4. Create medical record (use patient ID from step 2):
-```bash
-curl -X POST http://localhost:8080/api/records/create \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <doctor-token>" \
-  -d '{"patientId":2,"recordData":"Patient has fever and cough"}'
-```
-
-5. Login as PATIENT and view records:
-```bash
-curl -X POST http://localhost:8080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"patient@test.com","password":"pass123"}'
-
-curl -X GET http://localhost:8080/api/records/my-records \
-  -H "Authorization: Bearer <patient-token>"
 ```
 
 ## Security Features
