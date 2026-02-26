@@ -19,16 +19,16 @@ This platform provides a secure Electronic Health Record (EHR) system built with
 ### Doctor Module
 
 #### Doctor Dashboard
-![Doctor Dashboard](Encryption%20EHR%20screenshots/doctor-dashboard.png)
+![Doctor Dashboard](Encryption%20EHR%20screenshots/docter-dashboard.png)
 
 #### Create Medical Record
-![Create Record](Encryption%20EHR%20screenshots/doctor-record.png)
+![Create Record](Encryption%20EHR%20screenshots/docter-record.png)
 
 #### Patient List
-![Doctor Patient List](Encryption%20EHR%20screenshots/doctor-patient-list.png)
+![Doctor Patient List](Encryption%20EHR%20screenshots/docter-patient-list.png)
 
 #### Audit Logs
-![Doctor Audit](Encryption%20EHR%20screenshots/doctor-audit.png)
+![Doctor Audit](Encryption%20EHR%20screenshots/docter-audit.png)
 
 ---
 
