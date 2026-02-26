@@ -4,6 +4,47 @@ Healthcare systems often lack secure and efficient platforms for sharing sensiti
 
 This platform provides a secure Electronic Health Record (EHR) system built with Spring Boot and MySQL to enable encrypted medical data exchange. It implements AES-256 encryption, role-based access control, secure PDF uploads, real-time audit logging, and MVC architecture with a responsive frontend to ensure confidentiality, integrity, and efficient medical record management.
 
+## Application Screenshots
+
+### Authentication
+
+#### Signup
+![Signup](Encryption%20EHR%20screenshots/Signup.png)
+
+#### Login
+![Login](Encryption%20EHR%20screenshots/Login.png)
+
+---
+
+### Doctor Module
+
+#### Doctor Dashboard
+![Doctor Dashboard](Encryption%20EHR%20screenshots/doctor-dashboard.png)
+
+#### Create Medical Record
+![Create Record](Encryption%20EHR%20screenshots/doctor-record.png)
+
+#### Patient List
+![Doctor Patient List](Encryption%20EHR%20screenshots/doctor-patient-list.png)
+
+#### Audit Logs
+![Doctor Audit](Encryption%20EHR%20screenshots/doctor-audit.png)
+
+---
+
+### Patient Module
+
+#### Patient Dashboard
+![Patient Dashboard](Encryption%20EHR%20screenshots/patient-dashboard.png)
+
+#### View Records
+![Patient Records](Encryption%20EHR%20screenshots/patient-record.png)
+
+#### Activity Logs
+![Patient Logs](Encryption%20EHR%20screenshots/patient-logs.png)
+
+---
+
 ## Tech Stack
 
 - Java 17
