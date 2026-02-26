@@ -1,0 +1,248 @@
+# Secure Healthcare Data Exchange System
+
+A minimal backend system demonstrating secure authentication, role-based access control, and AES encryption for medical records using Java and Spring Boot.
+
+## Tech Stack
+
+- Java 17
+- Spring Boot 4.0.3
+- Spring Security
+- JWT Authentication
+- MySQL
+- JPA/Hibernate
+- Lombok
+- AES Encryption (javax.crypto)
+
+## Features
+
+- User registration with DOCTOR/PATIENT roles
+- JWT-based authentication
+- BCrypt password hashing
+- Role-based access control
+- AES encryption for medical records
+- Audit logging
+- Global exception handling
+- Input validation
+
+## Architecture
+
+```
+Controller → Service → Repository
+```
+
+## Database Setup
+
+1. Install MySQL
+2. Create database:
+```sql
+CREATE DATABASE healthcare_db;
+```
+
+3. Update credentials in `application.properties` if needed:
+```properties
+spring.datasource.username=root
+spring.datasource.password=root
+```
+
+## Running the Application
+
+```bash
+# Build the project
+./mvnw clean install
+
+# Run the application
+./mvnw spring-boot:run
+```
+
+The application will start on `http://localhost:8080`
+
+## API Endpoints
+
+### 1. Register User
+
+**POST** `/api/auth/register`
+
+Request:
+```json
+{
+  "name": "Dr. John Smith",
+  "email": "john@hospital.com",
+  "password": "password123",
+  "role": "DOCTOR"
+}
+```
+
+Response:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "email": "john@hospital.com",
+  "role": "DOCTOR"
+}
+```
+
+### 2. Login
+
+**POST** `/api/auth/login`
+
+Request:
+```json
+{
+  "email": "john@hospital.com",
+  "password": "password123"
+}
+```
+
+Response:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "email": "john@hospital.com",
+  "role": "DOCTOR"
+}
+```
+
+### 3. Create Medical Record (DOCTOR only)
+
+**POST** `/api/records/create`
+
+Headers:
+```
+Authorization: Bearer <token>
+```
+
+Request:
+```json
+{
+  "patientId": 2,
+  "recordData": "Patient diagnosed with hypertension. Prescribed medication."
+}
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "doctorId": 1,
+  "patientId": 2,
+  "recordData": "Patient diagnosed with hypertension. Prescribed medication.",
+  "createdAt": "2026-02-26T10:30:00"
+}
+```
+
+### 4. View My Records (PATIENT only)
+
+**GET** `/api/records/my-records`
+
+Headers:
+```
+Authorization: Bearer <token>
+```
+
+Response:
+```json
+[
+  {
+    "id": 1,
+    "doctorId": 1,
+    "patientId": 2,
+    "recordData": "Patient diagnosed with hypertension. Prescribed medication.",
+    "createdAt": "2026-02-26T10:30:00"
+  }
+]
+```
+
+## Testing Flow
+
+1. Register a DOCTOR:
+```bash
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Dr. Smith","email":"doctor@test.com","password":"pass123","role":"DOCTOR"}'
+```
+
+2. Register a PATIENT:
+```bash
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","email":"patient@test.com","password":"pass123","role":"PATIENT"}'
+```
+
+3. Login as DOCTOR and save token:
+```bash
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"doctor@test.com","password":"pass123"}'
+```
+
+4. Create medical record (use patient ID from step 2):
+```bash
+curl -X POST http://localhost:8080/api/records/create \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <doctor-token>" \
+  -d '{"patientId":2,"recordData":"Patient has fever and cough"}'
+```
+
+5. Login as PATIENT and view records:
+```bash
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"patient@test.com","password":"pass123"}'
+
+curl -X GET http://localhost:8080/api/records/my-records \
+  -H "Authorization: Bearer <patient-token>"
+```
+
+## Security Features
+
+1. **Password Security**: BCrypt hashing with salt
+2. **JWT Authentication**: Stateless token-based auth
+3. **Role-Based Access**: Spring Security method-level authorization
+4. **Data Encryption**: AES-256 encryption for medical records
+5. **Audit Logging**: All critical actions logged with timestamps
+
+## Database Tables
+
+### users
+- id (PK)
+- name
+- email (unique)
+- password (hashed)
+- role (DOCTOR/PATIENT)
+
+### medical_records
+- id (PK)
+- doctor_id (FK)
+- patient_id (FK)
+- encrypted_data (TEXT)
+- created_at
+
+### audit_logs
+- id (PK)
+- action
+- user_email
+- timestamp
+
+## Interview Talking Points
+
+1. **Authentication Flow**: JWT generation on login, validation on each request
+2. **Encryption**: AES-256 encryption before storing, decryption on retrieval
+3. **Authorization**: Role-based access using Spring Security annotations
+4. **Clean Architecture**: Separation of concerns with layered design
+5. **Security Best Practices**: Password hashing, token expiration, input validation
+6. **Audit Trail**: Comprehensive logging for compliance
+
+## Configuration
+
+Key configurations in `application.properties`:
+- `jwt.secret`: Secret key for JWT signing
+- `jwt.expiration`: Token validity period (24 hours)
+- `aes.secret.key`: 256-bit key for AES encryption
+
+## Notes
+
+- JWT tokens expire after 24 hours
+- Medical records are encrypted at rest
+- Only patients can view their own records
+- Only doctors can create medical records
+- All actions are logged in audit_logs table
