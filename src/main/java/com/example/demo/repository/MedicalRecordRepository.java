@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+//import
 import com.example.demo.entity.MedicalRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
