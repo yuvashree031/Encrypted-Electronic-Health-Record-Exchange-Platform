@@ -1,6 +1,5 @@
 package com.example.demo.repository;
 
-//import
 import com.example.demo.entity.AuditLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
