@@ -1,5 +1,5 @@
 package com.example.demo.repository;
-//DJKZ
+
 import com.example.demo.entity.MedicalRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
